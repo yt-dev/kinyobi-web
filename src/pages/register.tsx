@@ -4,16 +4,21 @@ import Wrapper from "../components/Wrapper";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import InputField from "../components/InputField";
 import { Box, Button } from "@chakra-ui/core";
+import { useRegisterMutation } from "../generated/graphql";
 
 interface registerProps {}
 
 const register: React.FC<registerProps> = ({}) => {
+  const [, register] = useRegisterMutation();
+
   return (
     <>
       <Wrapper variant="small">
         <Formik
           initialValues={{ username: "", password: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async (values) => {
+            const res = await register(values);
+          }}
         >
           {({ isSubmitting }) => (
             <Form>
@@ -33,7 +38,7 @@ const register: React.FC<registerProps> = ({}) => {
               <Button
                 mt={4}
                 type="submit"
-                isLoading={false}
+                isLoading={isSubmitting}
                 variantColor="teal"
               >
                 Register
