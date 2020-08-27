@@ -6,6 +6,9 @@ import { useMeQuery } from "../generated/graphql";
 interface NavBarProps {}
 
 const NavBar: React.FC<NavBarProps> = ({}) => {
+  // const { colorMode } = useColorMode();
+  // const isDark = colorMode === "dark";
+
   const [{ data, fetching }] = useMeQuery();
   let body = null;
 
@@ -24,14 +27,16 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   } else {
     body = (
       <Flex>
-        <Box mr={2}>{data.me.username}</Box>
+        <Box mr={2} color="#fff" fontWeight="700">
+          {data.me.username}
+        </Box>
         <Button variant="link">Logout</Button>
       </Flex>
     );
   }
 
   return (
-    <Flex bg="#70a1ff" p={3}>
+    <Flex bg="#1b202b" p={3}>
       <Box ml="auto" mr={20}>
         {body}
       </Box>
